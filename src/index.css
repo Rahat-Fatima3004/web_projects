@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+
+  html,
+  body,
+  #root {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: var(--font-sans);
+    background-color: #f3ece2;
+    color: #2f2a24;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* 2.5D Casement Window Perspective (Closed -> Just Opened -> Half Opened -> Full Opened) */
+.casement-stage {
+  perspective: 1350px;
+}
+
+.casement-frame-zoom {
+  transition:
+    transform 1250ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 950ms ease;
+}
+
+.casement-opening .casement-frame-zoom {
+  transform: scale(1.16);
+  opacity: 0;
+}
+
+.casement-sash-left {
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition: transform 1150ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: 140ms;
+}
+
+.casement-sash-right {
+  transform-origin: right center;
+  transform-style: preserve-3d;
+  transition: transform 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: 0ms;
+}
+
+.casement-latch {
+  transition: transform 280ms ease;
+}
+
+.casement-opening .casement-latch {
+  transform: rotate(-35deg);
+}
+
+.casement-opening .casement-sash-left {
+  transform: rotateY(-112deg);
+}
+
+.casement-opening .casement-sash-right {
+  transform: rotateY(112deg);
+}
+
+.casement-closed .casement-sash-left,
+.casement-closed .casement-sash-right {
+  transform: rotateY(0deg);
+}
+
+@keyframes gentle-float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-gentle-float {
+  animation: gentle-float 5.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-gentle-float {
+    animation: none;
+  }
+  .casement-sash-left,
+  .casement-sash-right,
+  .casement-frame-zoom {
+    transition-duration: 180ms;
+    transition-delay: 0ms;
+  }
+}
